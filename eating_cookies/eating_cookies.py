@@ -4,9 +4,16 @@ Returns: an integer
 '''
 def eating_cookies(n):
     # Your code here
+    count = 0
+    if n == 0:
+        return 1
+    if n == 1:
+        count += 1
+        return count
+    else:
+        return eating_cookies(n-1)
 
 
-    pass
 
 if __name__ == "__main__":
     # Use the main function here to test out your implementation
