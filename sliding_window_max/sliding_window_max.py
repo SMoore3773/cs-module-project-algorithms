@@ -3,7 +3,7 @@ Input: a List of integers as well as an integer `k` representing the size of the
 Returns: a List of integers
 '''
 from functools import reduce
-
+from collections import deque
 
 def sliding_window_max(nums, k):
     # Your code here
@@ -11,39 +11,62 @@ def sliding_window_max(nums, k):
     # add those numbers together, then push that value to separate array
     # move 'window' right, then repeat previous step until end of window is end of array
     # return array of max values
+
+    # maxArr = [max(nums[i:i+k]) for i in range(len(nums)-k+1)]
     
-    maxArr = [max(nums[i:i+k]) for i in range(len(nums)-k+1)]
+    maxVals = []
+    q = deque()
 
-    maxArr = []
-    i = 0
-    maxNum = -9999999999999999
-    while i + k <= len(nums):
-        win = nums[i:i+k]
-        maxInWin = max(win)
+    # remove all elements from a queue
+    for i, n in enumerate(nums):
+        while len(q) > 0 and n > q[-1]:
+            q.pop()
+        q.append(n)
+
+        # calculate window range
+        winRange = i - k + 1
+
+        # as long as our window range is == k, then we will add elements to the queue
+        if winRange >= 0:
+            # add the maximum element ( in this case it will be the first in the queue)
+            maxVals.append(q[0])
+
+            # check num on the left is needs to be evicted
+            # if so take it out of the start of the queue
+            if nums[winRange] == q[0]:
+                q.popleft()
+    return maxVals
+
+    # maxArr = []
+    # i = 0
+    # maxNum = -9999999999999999
+    # while i + k <= len(nums):
+    #     win = nums[i:i+k]
+    #     maxInWin = max(win)
         
-        if maxInWin == win[0]:
-            maxArr.append(maxInWin)
-            i += 1
-        if maxInWin == win[1]:
-            if i + k + 2 > len(nums):
-                maxArr.append(maxInWin)
-                i+=1
-            else: 
-                maxArr.append(maxInWin)
-                maxArr.append(maxInWin)
-                i += 2
-        if maxInWin == win[2]:
-            if i + k + 2 > len(nums):
-                maxArr.append(maxInWin)
-                i+=1
-            if i + k + 3 > len(nums):
-                maxArr.append(maxInWin)
+    #     if maxInWin == win[0]:
+    #         maxArr.append(maxInWin)
+    #         i += 1
+    #     if maxInWin == win[1]:
+    #         if i + k + 2 > len(nums):
+    #             maxArr.append(maxInWin)
+    #             i+=1
+    #         else: 
+    #             maxArr.append(maxInWin)
+    #             maxArr.append(maxInWin)
+    #             i += 2
+    #     if maxInWin == win[2]:
+    #         if i + k + 2 > len(nums):
+    #             maxArr.append(maxInWin)
+    #             i+=1
+    #         if i + k + 3 > len(nums):
+    #             maxArr.append(maxInWin)
 
-                i+=2
-            else:
-                maxArr.append(maxInWin)
-                maxArr.append(maxInWin)
-                i += 3
+    #             i+=2
+    #         else:
+    #             maxArr.append(maxInWin)
+    #             maxArr.append(maxInWin)
+    #             i += 3
 
     
     # sumMax = 0

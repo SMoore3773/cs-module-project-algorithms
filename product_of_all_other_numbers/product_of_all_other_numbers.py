@@ -16,10 +16,10 @@ def product_of_all_other_numbers(arr):
     # return arr
     totals = []
     temp = 1
-    for i in range(0,len(arr)):
+    for i in range(0, len(arr)):
         temp = arr[i]
-        arr[i] =1
-        totals.append(reduce((lambda x,y: x * y), arr))
+        arr[i] = 1
+        totals.append(reduce((lambda x, y: x * y), arr))
         arr[i] = temp
     return totals
 
